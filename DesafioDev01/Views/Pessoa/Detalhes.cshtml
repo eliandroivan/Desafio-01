@@ -1,0 +1,107 @@
+﻿@model DesafioDev01.Models.PessoaModel
+<script src="~/Scripts/funcoes.js"></script>
+@{
+    ViewBag.Title = "Detalhes";
+}
+@if (ViewBag.mensagemErro != null)
+{
+    <script>
+        window.alert('@ViewBag.mensagemErro');
+    </script>
+}
+
+
+<h2>Detalhes</h2>
+
+<div>
+    <h4>PessoaModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CpfCnpj)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CpfCnpj)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Logradouro)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Logradouro)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LogradouroNumero)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LogradouroNumero)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LogradouroComplemento)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LogradouroComplemento)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Bairro)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Bairro)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CEP)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CEP)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Cidade)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cidade)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Estado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Estado)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    <button type="button" class="btn btn-success" onclick="window.location.href='/Pessoa/Cadastro/@Model.Id'"><span class="glyphicon glyphicon-pencil"></span> Editar</button>
+    <a href="/Pessoa/" class="btn btn-danger" role="button" onclick="DeletarItem(@Model.Id)"><span class="glyphicon glyphicon-trash"></span> Deletar </a>
+    <a href="~/Pessoa/Index" class="btn btn-default" role="button"><span class="glyphicon glyphicon-list"></span> Voltar para a lista</a>
+</p>
+

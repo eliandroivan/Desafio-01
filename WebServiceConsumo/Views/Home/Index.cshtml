@@ -1,0 +1,133 @@
+﻿@model IEnumerable<WebServiceConsumo.Models.PessoaModelWS>
+
+@{
+    ViewBag.Title = "Index";
+
+}
+
+
+<h3>Consumindo dados da API</h3>
+<h5> <a HREF="http://localhost:54821/api/ListarPessoas" TARGET="_blank"> http://localhost:54821/api/ListarPessoas</a></h5>
+
+
+<br />
+<table class="table table-condensed table-hover table-striped">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CpfCnpj)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Logradouro)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LogradouroNumero)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LogradouroComplemento)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Bairro)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cidade)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Estado)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CEP)
+            </th>
+        </tr>
+    </thead>
+    <!--
+      <tbody id="tablebody">
+        <tr class="dados"></tr>
+    </tbody>
+    -->
+    <tbody id="tablebody">
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CpfCnpj)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Logradouro)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LogradouroNumero)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LogradouroComplemento)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Bairro)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cidade)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Estado)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CEP)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- a função abaixo não está sendo chamada. é um teste -->
+<script>
+    function BuscarDadosAPI() {
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "//localhost:54821/api/ListarPessoas/");
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4) {
+                if (xhr.status == 200) {
+                    console.log(xhr.responseText);
+                    itens = JSON.parse(xhr.responseText);
+
+                    var tabela = document.getElementById("tablebody");
+                    tabela.innerHTML = "";
+                    for (var i = 0; i < itens.lenght; i++) {
+                        tabela.innerHTML +=
+                            "<tr>" +
+                            "<td>" + itens[i].Id + "</td>" +
+                            "<td>" + itens[i].Nome + "</td>" +
+                            "<td>" + itens[i].CpfCnpj + "</td>" +
+                            "<td>" + itens[i].Email + "</td>" +
+                            "<td>" + itens[i].Logradouro + "</td>" +
+                            "<td>" + itens[i].LogradouroNumero + "</td>" +
+                            "<td>" + itens[i].LogradouroComplemento + "</td>" +
+                            "<td>" + itens[i].Bairro + "</td>" +
+                            "<td>" + itens[i].Cidade + "</td>" +
+                            "<td>" + itens[i].Estado + "</td>" +
+                            "<td>" + itens[i].CEP + "</td>" +
+                            "</tr>";
+                    }
+                }
+            }
+        }
+        xhr.send();
+    }
+</script>

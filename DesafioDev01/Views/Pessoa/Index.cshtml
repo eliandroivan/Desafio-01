@@ -1,0 +1,127 @@
+﻿
+
+@using X.PagedList.Mvc;
+@model X.PagedList.PagedList<DesafioDev01.Models.PessoaModel>
+
+<!-- ARROBAmodel IEnumerable<DesafioDev01.Models.PessoaModel> -->
+<script src="~/Scripts/funcoes.js"></script>
+
+@if (ViewBag.mensagemErro != null)
+{
+    <script>
+        window.alert('@ViewBag.mensagemErro');
+    </script>
+}
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 text-left">
+            <a href="~/Pessoa/Cadastro" class="btn btn-primary" role="button"><span class="glyphicon glyphicon-plus"></span> Cadastrar novo</a>
+        </div>
+        <div class="col-md-8">
+            @using (Html.BeginForm("Index", "Pessoa", FormMethod.Get))
+            {
+                <div class="input-group pull-right">
+                    <span class="input-group-addon" style="width:0;">Pesquisar por: </span>
+                    <select class="form-control" name="ColunaPesquisa" id="ColunaPesquisaID" style="width:165px;">
+                        <option value="0">-</option>
+                        <option value="Nome">Nome</option>
+                        <option value="CpfCnpj">CPF / CNPJ</option>
+                        <option value="Cidade">Cidade</option>
+                    </select>
+                    <script>
+                        PreencherColunaPesquisa();
+                        var url_ = new URL(location.href);
+                        var ColunaPesquisa = url_.searchParams.get("ColunaPesquisa");
+                        var options = document.getElementById('ColunaPesquisaID').getElementsByTagName('option');
+                        for (x in options) {
+                            if (options[x].value == ColunaPesquisa) {
+                                options[x].selected = 'selected';
+                            }
+                        }
+                    </script>
+                    @Html.TextBox("TextoPesquisa", ViewBag.FiltroAtual as string, new { @class = "form-control", style = "width:170px;" })
+
+                    <span class="input-group-btn" style="width:0;">
+                        <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span> </button>
+                    </span>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-6 text-center">
+        <span class="label label-default" style="font-size:16px;"> <i class="glyphicon glyphicon-flag"></i> Exibindo os registros @Model.FirstItemOnPage a @Model.LastItemOnPage de um total de <strong>@Model.TotalItemCount</strong></span>
+    </div>
+    <div class="col-md-6 text-center">
+        <a href="~/Pessoa/Index" class="btn btn-primary" role="button"><span class="glyphicon glyphicon-home"></span>   Exibir todos</a>
+    </div>
+</div>
+<br />
+<table class="table table-condensed table-hover">
+    <tr>
+        <th>
+            @Html.ActionLink("Id", "Index", new { Ordenacao = "Id", ColunaPesquisa = ViewBag.ColunaPesquisa, TextoPesquisa = ViewBag.TextoPesquisa })<span class="caret"></span>
+        </th>
+        <th>
+            @Html.ActionLink("Nome", "Index", new { Ordenacao = "Nome", ColunaPesquisa = ViewBag.ColunaPesquisa, TextoPesquisa = ViewBag.TextoPesquisa })<span class="dropup"><span class="caret"></span></span>
+        </th>
+        <th>
+            @Html.ActionLink("Número do CPF/CNPJ", "Index", new { Ordenacao = "CpfCnpj", ColunaPesquisa = ViewBag.ColunaPesquisa, TextoPesquisa = ViewBag.TextoPesquisa })<span class="dropup"><span class="caret"></span></span>
+        </th>
+        <th>
+            @Html.ActionLink("Bairro", "Index", new { Ordenacao = "Bairro", ColunaPesquisa = ViewBag.ColunaPesquisa, TextoPesquisa = ViewBag.TextoPesquisa })<span class="dropup"><span class="caret"></span></span>
+        </th>
+        <th>
+            @Html.ActionLink("Cidade", "Index", new { Ordenacao = "Cidade", ColunaPesquisa = ViewBag.ColunaPesquisa, TextoPesquisa = ViewBag.TextoPesquisa })<span class="dropup"><span class="caret"></span></span>
+        </th>
+        <th>
+            @Html.ActionLink("Estado", "Index", new { Ordenacao = "Estado", ColunaPesquisa = ViewBag.ColunaPesquisa, TextoPesquisa = ViewBag.TextoPesquisa })<span class="dropup"><span class="caret"></span></span>
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CpfCnpj)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Bairro)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cidade)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Estado)
+            </td>
+            <td>
+                @Html.ActionLink("Editar", "Cadastro", new { id = item.Id }) |
+                @Html.ActionLink("Detalhes", "Detalhes", new { id = item.Id }) |
+                <a href="/Pessoa/" onclick="DeletarItem(@item.Id)">Deletar </a>
+            </td>
+        </tr>
+    }
+
+</table>
+
+<div class="row text-center">
+    @Html.PagedListPager(Model,
+                                        pagina => Url.Action("Index", new { pagina, Ordenacao = ViewBag.Ordenacao, TextoPesquisa = ViewBag.TextoPesquisa, ColunaPesquisa = ViewBag.ColunaPesquisa }), new PagedListRenderOptions { LinkToFirstPageFormat = "<<", LinkToPreviousPageFormat = "< ", LinkToNextPageFormat = " >", LinkToLastPageFormat = ">>", DisplayLinkToFirstPage = X.PagedList.Mvc.Common.PagedListDisplayMode.Always, DisplayLinkToLastPage = X.PagedList.Mvc.Common.PagedListDisplayMode.Always })
+
+</div>
